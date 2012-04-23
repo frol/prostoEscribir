@@ -1,0 +1,68 @@
+﻿.prostoEscribirWYSIWYG {
+    font-family: "Helvetica Neue", Arial, sans-serif;
+    font-size: 13px;
+    line-height: 23px; 
+}
+
+.prostoEscribirBBCODE {
+    font: 9pt "Courier New";
+}
+
+.prostoEscribir {
+    border: 1px solid #D8D8D8;
+}
+
+.prostoEscribir .container iframe, .prostoEscribir .container textarea {
+    border: 0;
+    background-color: #FFFFFF;
+    padding: 5px;
+}
+
+.prostoEscribir .toolbar, .prostoEscribir .toolbar li {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	line-height: 1;
+}
+
+.prostoEscribir .toolbar {
+	position: relative;
+	overflow: hidden;
+	background: url(../i/bg.png) repeat-x top #d1d1d1;
+	border-bottom: 1px solid #b1b1b1;
+
+}
+.prostoEscribir .toolbar li {
+	float: left;
+	width: 32px;
+	height: 32px;
+	position: relative;
+}
+.prostoEscribir .toolbar li.act {
+	z-index: 3;
+	background: url(../i/hover.png) repeat-x;
+}
+.prostoEscribir .toolbar li a {
+	display: block;
+	height: 32px;
+	zoom: 1;
+	overflow: hidden;
+	background: url(../i/icons.png) no-repeat;	
+}
+.prostoEscribir .toolbar li:hover {
+	background: url(../i/hover.png) repeat-x;
+}
+
+.prostoEscribir .toolbar li a.imp_btn_html 		 { background-position: 0; }
+.prostoEscribir .toolbar li a.imp_btn_paragraph    { background-position: -64px; }
+.prostoEscribir .toolbar li a.imp_btn_lists 		 { background-position: -896px; }
+.prostoEscribir .toolbar li a.imp_btn_image 		 { background-position: -128px; }
+.prostoEscribir .toolbar li a.imp_btn_link 		 { background-position: -192px; }
+.prostoEscribir .toolbar li a.imp_btn_bold		 { background-position: -352px; }
+.prostoEscribir .toolbar li a.imp_btn_italic 		 { background-position: -384px; }
+.prostoEscribir .toolbar li a.imp_btn_underline 	 { background-position: -992px; }
+.prostoEscribir .toolbar li a.imp_btn_align_left	 { background-position: -800px; }
+.prostoEscribir .toolbar li a.imp_btn_align_center { background-position: -544px; }
+.prostoEscribir .toolbar li a.imp_btn_align_right  { background-position: -576px; }
+.prostoEscribir .toolbar li a.imp_btn_align_full   { background-position: -960px; }
+
