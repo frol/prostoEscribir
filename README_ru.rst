@@ -6,6 +6,8 @@ prostoEscribir
 
 Домашняя страница разработчиков: http://prostoksi.com
 
+.. image:: screenshot.png
+
 .. contents::
 
 Краткий обзор

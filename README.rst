@@ -6,12 +6,15 @@ Name explanation: Prosto ("просто") - simple in Russian, Escribir - write 
 
 Developers team homepage: http://prostoksi.com
 
+.. image:: screenshot.png
+
 .. contents::
 
 Quick overview
 ==============
 
 There are available buttons:
+
  * Bold
  * Italic
  * Underline
@@ -25,6 +28,7 @@ There are available buttons:
  * Switch to source
 
 There are implemented buttons, but they are not tested, so commented in code:
+
  * Select color with color picker
  * Insert Youtube video
  * Insert smiles
