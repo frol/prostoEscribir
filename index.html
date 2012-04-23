@@ -1,0 +1,129 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>prostoEscribir by frol</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>prostoEscribir</h1>
+        <p>JavaScript BBcode editor</p>
+        <p class="view"><a href="https://github.com/frol/prostoEscribir">View the Project on GitHub <small>frol/prostoEscribir</small></a></p>
+        <ul>
+          <li><a href="https://github.com/frol/prostoEscribir/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/frol/prostoEscribir/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/frol/prostoEscribir">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h1>prostoEscribir</h1>
+
+<p><strong>Prosto Escribir</strong> is the JavaScript simple BBcode editor.
+Name explanation: Prosto ("просто") - simple in Russian, Escribir - write in Spanish.</p>
+
+<p>Developers team homepage: <a href="http://prostoksi.com">http://prostoksi.com</a></p>
+
+<p><img src="https://github.com/frol/prostoEscribir/raw/master/screenshot.png" alt="prostoEscribir Screenshot"></p>
+
+<h1>Quick overview</h1>
+
+<p>There are available buttons:</p>
+
+<ul>
+<li>Bold</li>
+<li>Italic</li>
+<li>Underline</li>
+<li>Align left</li>
+<li>Align right</li>
+<li>Align center</li>
+<li>Align justify</li>
+<li>Insert link</li>
+<li>Insert image</li>
+<li>Unordered list</li>
+<li>Switch to source</li>
+</ul><p>There are implemented buttons, but they are not tested, so commented in code:</p>
+
+<ul>
+<li>Select color with color picker</li>
+<li>Insert Youtube video</li>
+<li>Insert smiles</li>
+</ul><p>Hotkeys work for some buttons. Toolbar and language are fully configurable!</p>
+
+<h1>Requirements</h1>
+
+<ul>
+<li>jQuery 1.4.2+</li>
+<li>jQuery.outerHTML (<a href="http://yelotofu.com/labs/jquery/snippets/outerhtml/jquery.outerhtml.js">http://yelotofu.com/labs/jquery/snippets/outerhtml/jquery.outerhtml.js</a> - backup is in requirements folder)</li>
+</ul><h1>Supported browsers</h1>
+
+<ul>
+<li>FireFox 11.0+</li>
+<li>Google Chrome</li>
+<li>Opera</li>
+<li>IE 8+</li>
+</ul><h1>Usage</h1>
+
+<p>Simple example::</p>
+
+<pre><code>$(function() {
+    var prostoEscribir = $('#book_content').prostoEscribir();
+    $('#book_form').submit(function() {
+        // Sync last edited text version into textarea.
+        prostoEscribir.doCheck();
+    });
+});
+</code></pre>
+
+<h1>Settings</h1>
+
+<p>prostoEscribir options dict:</p>
+
+<ul>
+<li>css_urls - list of css files, that need include in iframe [default: ]</li>
+<li>lang - language specifier string (Now available only 'en', 'ru', you can add additional languages into 'langs' folder) [default: 'en']</li>
+<li>toolbar - dictionary of buttons [default: 'classic']</li>
+<li>path - place where located 'langs' and 'toolbars' folders [default: ]</li>
+</ul><p>Toolbar syntax::</p>
+
+<pre><code>{
+    &lt;button id&gt;: {
+        name: &lt;button name&gt;,
+        title: &lt;button help text&gt;,
+        [exec: &lt;ContentEditable command string&gt;,]
+        [func: &lt;function name from &gt;,]
+        [hotkey: &lt;hotkey function&gt;]
+    },
+    . . .
+}
+</code></pre>
+      </section>
+    </div>
+    <footer>
+      <p>Project maintained by <a href="https://github.com/frol">frol</a></p>
+      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
+    </footer>
+    <!--[if !IE]><script>fixScale(document);</script><!--<![endif]-->
+              <script type="text/javascript">
+            var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+            document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+          </script>
+          <script type="text/javascript">
+            try {
+              var pageTracker = _gat._getTracker("UA-31132431-1");
+            pageTracker._trackPageview();
+            } catch(err) {}
+          </script>
+
+  </body>
+</html>
