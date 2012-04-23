@@ -79,5 +79,5 @@ Toolbar syntax::
             [func: <function name from >,]
             [hotkey: <hotkey function>]
         },
-        ...
+        . . .
     }

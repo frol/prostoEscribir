@@ -80,7 +80,7 @@ prostoEscribir словарь опций:
             [func: <member class method name which will be called>,]
             [hotkey: <hotkey function>]
         },
-        ...
+        . . .
     }
 
  * name - данное название используется в аттрибуте class
