@@ -258,12 +258,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 // TODO: make bbcode processing customizable. There is no color button now.
                 //this.rep(/<(span|blockquote|pre|p)\s[^<>]*?style=\"?color: ?([^<>]*?);\"?\s*([\s\S]*?)\r?\n?<\/\1>/gi, "[color=$2]<$1 style=$3</$1>[/color]");
                 
-                this.rep(/<(span|blockquote|pre|p|ul|ol|li)\s[^<>]*?style=(\"?)text-align: ?(left|justify);(\"?[^>]*?)>([\s\S]*?)\r?\n?<\/\1>/gi, "<$1 style=$2$4>$5</$1>\n");
-                this.rep(/<(span|blockquote|pre|p|ul|ol|li)\s[^<>]*?style=(\"?)text-align: ?right;(\"?[^>]*?)>([\s\S]*?)\r?\n?<\/\1>/gi, "<$1 style=$2$3>[right]$4[/right]</$1>\n");
-                this.rep(/<(span|blockquote|pre|p|ul|ol|li)\s[^<>]*?style=(\"?)text-align: ?center;(\"?[^>]*?)>([\s\S]*?)\r?\n?<\/\1>/gi, "<$1 style=$2$3>[center]$4[/center]</$1>\n");
-                this.rep(/<(span|blockquote|pre|p|ul|ol|li)\s[^<>]*?align=\"?(left|justify)\"?([^>]*?)>([\s\S]*?)\r?\n?<\/\1>/gi, "<$1 $3>$4</$1>\n");
-                this.rep(/<(span|blockquote|pre|p|ul|ol|li)\s[^<>]*?align=\"?right\"?([^>]*?)>([\s\S]*?)\r?\n?<\/\1>/gi, "<$1 $2>[right]$3[/right]</$1>\n");
-                this.rep(/<(span|blockquote|pre|p|ul|ol|li)\s[^<>]*?align=\"?center\"?([^>]*?)>([\s\S]*?)\r?\n?<\/\1>/gi, "<$1 $2>[center]$3[/center]</$1>\n");
+                this.rep(/<(span|blockquote|pre|p|ul|ol|li)\s[^<>]*?style=(\"?)text-align: ?(left|justify);(\"?[^>]*?)>([\s\S]*?)\r?\n?<\/\1>/gi, "<$1 style=$2$4>$5</$1>");
+                this.rep(/<(span|blockquote|pre|p|ul|ol|li)\s[^<>]*?style=(\"?)text-align: ?right;(\"?[^>]*?)>([\s\S]*?)\r?\n?<\/\1>/gi, "<$1 style=$2$3>[right]$4[/right]\n</$1>");
+                this.rep(/<(span|blockquote|pre|p|ul|ol|li)\s[^<>]*?style=(\"?)text-align: ?center;(\"?[^>]*?)>([\s\S]*?)\r?\n?<\/\1>/gi, "<$1 style=$2$3>[center]$4[/center]\n</$1>");
+                this.rep(/<(span|blockquote|pre|p|ul|ol|li)\s[^<>]*?align=\"?(left|justify)\"?([^>]*?)>([\s\S]*?)\r?\n?<\/\1>/gi, "<$1 $3>$4</$1>");
+                this.rep(/<(span|blockquote|pre|p|ul|ol|li)\s[^<>]*?align=\"?right\"?([^>]*?)>([\s\S]*?)\r?\n?<\/\1>/gi, "<$1 $2>[right]$3[/right]\n</$1>");
+                this.rep(/<(span|blockquote|pre|p|ul|ol|li)\s[^<>]*?align=\"?center\"?([^>]*?)>([\s\S]*?)\r?\n?<\/\1>/gi, "<$1 $2>[center]$3[/center]\n</$1>");
 
                 // TODO: make bbcode processing customizable. There is no font button now.
                 //this.rep(/<(span|blockquote|pre|p)\s[^<>]*?style=(\"?)font-family: ?([^<>]*?);(\"?\s*([\s\S]*?)<\/\1>/gi, "[font=$2]<$1 style=$3</$1>[/font]");
@@ -271,7 +271,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 this.rep(/<(blockquote|pre)\s[^<>]*?style=\"?\"? (class=|id=)([^<>]*)>([\s\S]*?)\r?\n?<\/\1>/gi, "<$1 $2$3>$4</$1>");
                 this.rep(/<pre>([\s\S]*?)\r?\n?<\/pre>/gi, "[code]$1[/code]");
                 this.rep(/<pre code=\"([^\"]+?)\">([\s\S]*?)\r?\n?<\/pre>/gi, "[code=$1]$2[/code]");
-                this.rep(/<span\s[^<>]*?style=\"?\"?>([\s\S]*?)<\/span>/gi, "$1");
+                this.rep(/<(span|p)\s[^<>]*?style=\"?\"?>([\s\S]*?)<\/\1>/gi, "$2");
             }while(sc!=this.content);
             this.rep(/<ul( [^>]*?)?>/gi, "[list]");
             this.rep(/<\/ul>/gi, "[/list]\n");
@@ -280,7 +280,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             this.rep(/<li( [^>]*?)?>/gi, "[*]");
             this.rep(/<\/li>/gi, "[/*]");
 
-            this.rep(/<p(\s[^<>]*)?>/gi,"");
+            this.rep(/<p(\s[^>]*)?>/gi,"");
             this.rep(/<\/p>/gi, "\n");
             this.rep(/<[^<>]*>/gi,"");
             this.rep(/&lt;/gi,"<");
@@ -331,6 +331,8 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 this.rep(/\[\/u\]/gi,"</u>");
                 this.rep(/\[\*\][\n\r\s]*\[center\]/gi,"<li align=\"center\">");
                 this.rep(/\[\*\][\n\r\s]*\[right\]/gi,"<li align=\"right\">");
+                this.rep(/\[list\][\n\r\s]*\[center\]/gi,"<ul align=\"center\">");
+                this.rep(/\[list\][\n\r\s]*\[right\]/gi,"<ul align=\"right\">");
                 this.rep(/\[center\]/gi,"<p align=\"center\">");
                 this.rep(/\[right\]/gi,"<p align=\"right\">");
             } else {
@@ -340,11 +342,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 this.rep(/\[\/(b|i|u)\]/gi,"</span>");
                 this.rep(/\[\*\][\n\r\s]*\[center\]/gi,"<li style=\"text-align: center;\">");
                 this.rep(/\[\*\][\n\r\s]*\[right\]/gi,"<li style=\"text-align: right;\">");
+                this.rep(/\[list\][\n\r\s]*\[center\]/gi,"<ul style=\"text-align: center;\">");
+                this.rep(/\[list\][\n\r\s]*\[right\]/gi,"<ul style=\"text-align: right;\">");
                 this.rep(/\[center\]/gi,"<p style=\"text-align: center;\">");
                 this.rep(/\[right\]/gi,"<p style=\"text-align: right;\">");
             }
-            this.rep(/\[\/center\][\n\r\s]*\[\/\*\]/gi,"</li>");
-            this.rep(/\[\/right\][\n\r\s]*\[\/\*\]/gi,"</li>");
+            this.rep(/\[\/(center|right)\][\n\r\s]*\[\/\*\]/gi,"</li>");
+            this.rep(/\[\/(center|right)\][\n\r\s]*\[\/list\]/gi,"</ul>");
             this.rep(/(\[\/(right|center)\]\r?\n? ?)+/gi,"</p>")
             this.rep(/\r?\n?\[list\]/gi, "\n<ul>");
             this.rep(/\[\/list\]\r?\n?/gi, "</ul>");
@@ -379,8 +383,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             for (var i = 0; i < content_length; ++i) {
                 if (this.content.charAt(i) == '\n') {
                     if (openned_block <= 0) {
-                    //if (!last_open_tag) {
-                        if (tmp_content == '') {
+                        if ($.trim(tmp_content) == '') {
                             sc.push('<p><br></p>');
                         } else {
                             sc.push('<p>' + tmp_content + '</p>');
@@ -407,10 +410,20 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                         tmp_content += tag;
                         if (closing_tag) {
                             --openned_block;
-                            if (openned_block == 0 && this.content.charAt(i+2) != '\n') {
-                                sc.push('<p>' + tmp_content + '></p>');
-                                tmp_content = '';
+                            if (openned_block == 0) {
+                                tmp_content += '>';
                                 ++i;
+                                if (tag == 'p') {
+                                    sc.push(tmp_content);
+                                    var ch = this.content.charAt(i+1);
+                                    while (ch == ' ') {
+                                        ++i;
+                                        var ch = this.content.charAt(i);
+                                    }
+                                } else {
+                                    sc.push('<p>' + tmp_content + '</p>');
+                                }
+                                tmp_content = '';
                             }
                         }
                         else
