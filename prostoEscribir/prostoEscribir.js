@@ -82,13 +82,12 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
     Construct.prototype = {
         init: function() {
             this.editorVisible = false;
-            this.enableWysiwyg = false;
+            this.enabledWYSIWYG = false;
             this.content = '';
             this.toolbar_buttons = new Array();
 
-            var textarea_id = this.$el.get(0).id;
-            var textarea_val = this.$el.val();
-            var prostoEscribir_id = 'prostoEscribir_' + textarea_id;
+            this.textarea_id = this.$el.get(0).id;
+            var prostoEscribir_id = 'prostoEscribir_' + this.textarea_id;
 
             this.$prostoEscribir = $('<div class="prostoEscribir" id="' + prostoEscribir_id + '"></div>');
             var $toolbar = $('<div class="toolbar"></div>');
@@ -128,21 +127,22 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             this.$prostoEscribir.html($toolbar);
             this.$prostoEscribir.append($container);
             this.$el.outerHTML(this.$prostoEscribir);
-            this.initEditor(textarea_id);
+            this.initEditor();
         },
 
-        initEditor: function(textarea_id, wysiwyg) {
+        initEditor: function(wysiwyg) {
             // Init iframe editor
             if(wysiwyg!=undefined)
-                this.enableWysiwyg = wysiwyg;
+                this.enabledWYSIWYG = wysiwyg;
             else
-                this.enableWysiwyg = true;
-            this.textbox_element = document.getElementById(textarea_id);
+                this.enabledWYSIWYG = true;
+            this.textbox_element = document.getElementById(this.textarea_id);
             this.textbox_element.setAttribute('class', 'prostoEscribirBBCODE');
             this.textbox_element.className = "prostoEscribirBBCODE";
-            if (this.enableWysiwyg) {
+            if (this.enabledWYSIWYG) {
                 this.ifm = document.createElement("iframe");
-                this.ifm.setAttribute("id", "rte_" + textarea_id);
+                this.ifm.setAttribute("id", "rte_" + this.textarea_id);
+                this.ifm.setAttribute("class", "prostoEscribirView");
                 this.ifm.setAttribute("frameborder", "0");
                 this.ifm.style.width = this.textbox_element.style.width;
                 this.ifm.style.height = this.textbox_element.style.height;
@@ -157,7 +157,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
         showEditor: function() {
             // Init iframe HTML and key bindings
-            if (!this.enableWysiwyg) return;
+            if (!this.enabledWYSIWYG) return;
             this.editorVisible = true;
             this.content = this.textbox_element.value;
             this.myeditor = this.ifm.contentWindow.document;
@@ -167,10 +167,10 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
             this.myeditor.write('<html><head>');
             for (index in this.options.css_urls) {
                 this.myeditor.write('<link href="' + this.options.css_urls[index]
-                    + '" rel="Stylesheet" type="text/css" />');
+                    + '" rel="stylesheet" type="text/css" />');
             }
             this.myeditor.write('</head>');
-            this.myeditor.write('<body style="margin:0;padding:5px;" class="prostoEscribirWYSIWYG">');
+            this.myeditor.write('<body style="margin:0;padding:5px;" class="prostoEscribirWYSIWYG" id="' + this.textarea_id + '">');
             this.myeditor.write(this.content);
             this.myeditor.write('</body></html>');
             this.myeditor.close();
@@ -195,7 +195,7 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 this.editorVisible = false;
             }
             else {
-                if (this.enableWysiwyg && this.ifm) {
+                if (this.enabledWYSIWYG && this.ifm) {
                     this.ifm.style.display = '';
                     this.textbox_element.style.display = 'none';
                     this.showEditor();
@@ -211,6 +211,13 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
         html2bbcode: function() {
             // Convert HTML to BBcodes
+
+            // Cleanup pasted text from MS Word
+            // Use [\s\S] instead of . (dot) because dot does not match \n \r
+            this.rep(/<!--\[if [\s\S]+?<!(--)?\[endif\]-->/gi, "");
+            this.rep(/<!--[\s\S]*?-->/gi, "");
+            this.rep(/<![\s\S]*?>/gi, "");
+
             // Here is lots of hacks for different browsers...
             this.rep(/\[/gi,"&#91;");
             this.rep(/\]/gi,"&#93;");
