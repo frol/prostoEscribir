@@ -407,13 +407,16 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                     }
                     tag = null;
                     if (this.content.substr(i+1, 2) == 'ul') {
-                        tag = 'ul';
-                        i += 2;
+                        var next_ch = this.content.charAt(i+3);
+                        if (next_ch == '>' || next_ch == ' ')
+                            tag = 'ul';
                     } else if (this.content.charAt(i+1) == 'p') {
-                        tag = 'p';
-                        ++i;
+                        var next_ch = this.content.charAt(i+2);
+                        if (next_ch == '>' || next_ch == ' ')
+                            tag = 'p';
                     }
                     if (tag) {
+                        i += tag.length;
                         tmp_content += tag;
                         if (closing_tag) {
                             --openned_block;
@@ -423,9 +426,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                                 if (tag == 'p') {
                                     sc.push(tmp_content);
                                     var ch = this.content.charAt(i+1);
-                                    while (ch == ' ') {
+                                    while (ch == ' ' || ch == '\t') {
                                         ++i;
-                                        var ch = this.content.charAt(i);
+                                        var ch = this.content.charAt(i + 1);
                                     }
                                 } else {
                                     sc.push('<p>' + tmp_content + '</p>');
@@ -439,8 +442,9 @@ SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
                 } else
                     tmp_content += this.content.charAt(i);
             }
-            if (tmp_content != '')
+            if (tmp_content != '') {
                 sc.push('<p>' + tmp_content + '</p>');
+            }
             this.content = sc.join('');
 
             // TODO: make this optional
